@@ -1,0 +1,44 @@
+baseURL = "https://taming-ai.net/"
+title = "Taming AI"
+theme = "HugoTeX"
+# languageCode = "en"
+DefaultContentLanguage = "en"
+enableInlineShortcodes = true
+footnoteReturnLinkContents = "^"
+
+[pagination]
+  pagerSize = 10
+
+[Params]
+  description = "A short site description"
+  # darkmode = true  # Set to true to enforce dark mode
+  # lightmode = true  # Set to true to enforce light mode
+  [Params.Favicon]
+    ico = "/favicon.ico"
+    svg = "/favicon.svg"
+    png = "/favicon.png"
+
+  [Params.Author]
+    name = "S.Blum & S.Bondar"
+    abstract = """
+    We are aspiring software engineers and school students at Gutenberg-Gymnasium in Wiesbaden.
+    Our primary interest lies in the area of natural language processing.
+    """
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  # series = "series"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          inline = [['$', '$']]
+          block = [['$$', '$$']]
+  [markup.highlight]
+    style = "catppuccin-mocha"  # Syntax highlighting style
