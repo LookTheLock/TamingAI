@@ -1,0 +1,22 @@
+<nav class="navbar">
+  <div class="nav">
+    {{ if .Site.Params.logo }}
+      <a href="{{ "/" | relURL }}" class="nav-logo">
+      <img src="{{ printf "images/%s" .Site.Params.logo.url | relURL }}"
+           width="{{ .Site.Params.logo.width }}"
+           height="{{ .Site.Params.logo.height }}"
+           alt="{{ .Site.Params.logo.alt }}">
+      </a>
+    {{ end }}
+
+    <ul class="nav-links">
+      {{ range .Site.Params.nav }}
+        {{ if .icon }}
+          <li><a href="{{ .url | relLangURL }}" name="{{ .name }}"><i class="{{ .icon }}"></i></a></li>
+        {{ else }}
+          <li><a href="{{ .url | relLangURL }}" name="{{ .name }}">{{ .name }}</a></li>
+        {{ end }}
+      {{ end }}
+    </ul>
+  </div>
+</nav>

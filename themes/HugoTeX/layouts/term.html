@@ -1,0 +1,11 @@
+{{ define "main" }}
+
+<div class="container" role="main">
+  <div class="posts-list">
+    {{ range .Pages }}
+      {{ partial "preview.html" . }}
+    {{ end }}
+  </div>
+</div>
+
+{{ end }}

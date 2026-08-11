@@ -1,0 +1,67 @@
+{{ if .IsHome }}
+	{{ if .Site.Params.homeTitle }}
+		{{ $.Scratch.Set "title" .Site.Params.homeTitle }}
+	{{ else }}
+		{{ $.Scratch.Set "title" .Site.Title }}
+	{{ end }}
+{{ else }}
+	{{ $.Scratch.Set "title" .Title }}
+{{ end }}
+
+
+{{ $title := $.Scratch.Get "title" }}
+{{ if $title }}
+<header>
+  {{ partial "nav.html" . }}
+  <div class="intro-header">
+    <div class="container">
+      <div class="{{ .Type }}-heading">
+        {{ if or (eq .Kind "taxonomy") (eq .Kind "term") }}
+          <h1>{{ .Title }}</h1>
+          <p class="author"><a href="{{ "/" | relURL }}">{{ .Site.Title }}</a></p>
+        {{ else }}
+          <h1>{{ with $title }}{{.}}{{ else }}<br/>{{ end }}</h1>
+          {{ $author := "" }}
+          {{ $abstract := "" }}
+          {{ if .IsHome }}
+            {{ $author = .Site.Params.Author.name }}
+            {{ $abstract = .Site.Params.Author.abstract }}
+          {{ else if not .IsPage }}
+          {{ else }}
+            {{ $author = .Params.author | default .Site.Params.Author.name }}
+          {{ end }}
+          {{ with $author }}
+            <p class="author">
+              {{- if $.IsHome -}}
+                <a href="{{ "about/" | relURL }}">{{ . }}</a>
+              {{- else -}}
+                <a href="{{ "about/" | relURL }}">{{ . }}</a> at <a href="{{ "/" | relURL }}">{{ $.Site.Title }}</a>
+              {{- end -}}
+              {{- if $.IsPage -}}
+                <br>
+                {{- $lastmod := $.Lastmod.Format ($.Site.Params.dateformat | default "Jan 2, 2006") -}}
+                {{- $pubdate := $.PublishDate.Format ($.Site.Params.dateformat | default "Jan 2, 2006") -}}
+                {{ $pubdate }}{{ if ne $lastmod $pubdate }} ({{ $lastmod }}){{ end }}
+                {{- if $.Params.categories -}}
+                  <br>
+                  {{- range $.Params.categories -}}
+                    <a href="{{ printf "/categories/%s/" (. | urlize) | relURL }}">{{ . }}</a>&nbsp;
+                  {{- end -}}
+                {{- end -}}
+              {{- end -}}
+            </p>
+          {{ end }}
+          {{ with $abstract }}
+            <div class="abstract">
+              <h2>Abstract</h2>
+              <p>{{ . }}</p>
+            </div>
+          {{ end }}
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</header>
+{{ else }}
+<div class="intro-header"></div>
+{{ end }}
