@@ -175,7 +175,7 @@ dd {
 
 /* Make default font-size 1rem and add smooth scrolling to anchors */
 html {
-  font-size: 1rem;
+  font-size: 1.8rem;
 }
 @media (prefers-reduced-motion: no-preference) {
   html {
@@ -793,4 +793,8 @@ h4,
 h5,
 h6 {
   margin-bottom: 0.8rem;
+}
+
+details {
+  cursor: pointer;
 }

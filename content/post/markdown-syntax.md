@@ -139,7 +139,7 @@ Tables aren't part of the core Markdown spec, but Hugo supports supports them ou
 <cite><abbr title="Graphics Interchange Format">GIF</abbr>[^2]</cite> is a bitmap image format.
 
 [^2]: Graphics Interchange Format
-
+z
 H<sub>2</sub>O
 
 X<sup>n</sup> + Y<sup>n</sup> = Z<sup>n</sup>
