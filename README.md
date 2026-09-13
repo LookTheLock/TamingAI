@@ -28,9 +28,9 @@ about how to use AI, but also **how it works** under the hood.
 Learn more and contribute on GitHub: [NeuralNetwork](https://github.com/LookTheLock/NeuralNetwork).
 
 The code base consists of three parts:
-1. [The static website](#The static website)
-2. [Server side image parsing](#Server side image parsing)
-3. [Neural network image classifier](#Neural network image classifier) (the AI part)
+1. [The static website](#the-static-website)
+2. [Server side image parsing](#server-side-image-parsing)
+3. [Neural network image classifier](#neural-network-image-classifier) (the AI part)
 
 
 # The static website
@@ -84,30 +84,30 @@ Notes on the setup:
 
 # Neural network image classifier
 
-Now, the [ready image](#Server side image parsing) gets piped
+Now, the [ready image](#server-side-image-parsing) gets piped
 to the `NeuralNetwork` executable.
 
 The source is written in `C++`. See code at `NeuralNetwork/`
 
 In `stdin` comes the bitmap of the parsed image.
-It gets decoded and put into a matrix.
-Then we load the `ClassifierNetwork` from a pretrained net.
-> ...Simon, ich weiß nicht, wie das Ding genau funktioniert...
+It gets decoded, converted to grayscale and put into a matrix.
+Then we load the `ClassifierNetwork` from a pre-trained net,
+and input the matrix into its `predict` method.
+Thus, *predicting* the image.
 
-And finaly predict the image.
+The details on math behind how this all works is the whole
+purpose of the project. So if you are interested visit [TamingAI.net](https://taming-ai.net/)
 
-Crutialy, the output to `stdout` has the following format:
+Crucially, the output to `stdout` has the following format:
 ```
 Content-Type: text/plain
 
 
 2
 ```
-We specefy the content type with `Content-Type: text/plain` and
+We specify the content type with `Content-Type: text/plain` and
 leave **two black lines**. This is the format CGI needs.
 
-The details on math behind how this all works is the wole
-purpose of the project. So if you are interested visit [TamingAI.net](https://taming-ai.net/)
 
 
 # Contributing
