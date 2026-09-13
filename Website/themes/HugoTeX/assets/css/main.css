@@ -47,3 +47,7 @@ footer .theme-by {
     display: block;
   }
 }
+
+.canvas-container {
+	/* border: 10px solid; */
+}

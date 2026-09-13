@@ -118,6 +118,7 @@
   --border-width-thick: 2.27px;
   --sidenote-target-border-color: hsl(55, 55%, 70%);
   --footnotes-border-color: hsl(0, 0%, 39%);
+  --canvas-border-color: #071327;
   --text-indent-size: 1.463rem; /* In 12pt [Latin Modern font] LaTeX article
   \parindent =~ 17.625pt; taking also into account the ratio
   1pt[LaTeX] = (72 / 72.27) * 1pt[HTML], with default 12pt/1rem LaTeX.css font
@@ -153,6 +154,7 @@
     --sidenote-target-border-color: #5693fa;
     --footnotes-border-color: #5693fa;
     --proof-symbol-filter: invert(80%);
+    --canvas-border-color: #e7f1ff;
   }
 }
 
@@ -797,4 +799,14 @@ h6 {
 
 details {
   cursor: pointer;
+}
+
+#canvas {
+	border: 2px solid var(--canvas-border-color);
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	background-color: white;
 }

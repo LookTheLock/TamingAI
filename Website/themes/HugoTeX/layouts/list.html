@@ -12,6 +12,11 @@
       {{ end }}
     </article>
   {{ else }}
+
+      {{ if .IsHome }}
+	{{ partial "canvas.html" . }}
+      {{ end }}
+
     <div class="posts-list">
       {{ if .IsHome }}
         {{ $pag := .Paginate (where site.RegularPages "Type" "in" site.Params.mainSections) }}
