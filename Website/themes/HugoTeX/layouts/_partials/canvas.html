@@ -234,12 +234,7 @@ xhr.onreadystatechange = function () {
 
 // ai was used to assist with creation of this function
 function upload() {
-  let small = document.createElement("canvas");
-  small.width = 28;
-  small.height = 28;
-  small.getContext("2d").drawImage(canvas, 0, 0, 28, 28);
-
-  small.toBlob((blob) => {
+    canvas.toBlob((blob) => {
     xhr.open("POST", "cgi-bin/parsing.sh.cgi");
     xhr.setRequestHeader("Content-Type", "image/png");
     xhr.send(blob);

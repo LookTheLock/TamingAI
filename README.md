@@ -64,9 +64,8 @@ As you may have noticed, there is a `canvas` on the home page. The
 code for the client side is in
 `Website/themes/HugoTeX/layouts/_partials/canvas.html`.
 
-There we have the `upload()` function. It makes a copy of the drawing
-`canvas`, resizes it to be `28x28`, then sends the bitmap of the
-image to the server.
+There we have the `upload()` function. It sends the
+bitmap image of the `canvas` to the server.
 
 On the server there is this `parsing.sh.cgi`
 bash script that receives the data via `stdin`.
