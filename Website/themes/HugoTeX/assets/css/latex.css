@@ -195,7 +195,7 @@ body.libertinus {
 
 body {
   font-family: 'Latin Modern', Georgia, Cambria, 'Times New Roman', Times, serif;
-  line-height: 1.8;
+  line-height: 1.6;
 
   max-width: 90ch;
   min-height: 100vh;
@@ -699,11 +699,13 @@ input.sidenote-toggle {
 /* Center title and paragraph */
 .abstract,
 .abstract p {
-  text-align: center;
+  text-align: justify;
+  line-height: 1.35;
   margin-top: 0;
 }
 .abstract {
-  margin: 2.25rem 0;
+  margin: 0.25rem 2rem;
+  text-align: center;
 }
 .abstract > h2 {
   font-size: 1rem;
@@ -797,6 +799,17 @@ h6 {
   margin-bottom: 0.8rem;
 }
 
+/* h1, */
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Libertinus";
+}
+
+
+
 details {
   cursor: pointer;
 }
@@ -809,4 +822,15 @@ details {
 	margin-right: auto;
 	display: block;
 	background-color: white;
+}
+
+.katex {
+    /* max-width: 100% !important; */
+    /* overflow-x: scroll !important; */
+    overflow-y: hidden;
+    overflow-x: scroll hidden;
+    /* scrollbar-width: thin; */
+    scrollbar-color: var(--body-color) transparent;
+
+    /* white-space: normal !important; */
 }

@@ -5,13 +5,15 @@ date = "2026-09-18"
 +++
 
 
-Here, we will provide an overview of the underlying logic of machine learning.
+Here, we provide an overview of the underlying logic of machine learning. Specifically, we will learn about regression and classification.
 
 <!--more-->
 
-## What even is an Artificial Intelligence?
+## Introduction
+What even is an Artificial Intelligence? ...
 
-### **Regression**
+
+## **Regression**
 Imagine a handful of dots scattered across a plane.
 
 <!-- ![[../../Attachements/Informatique/LinearDatapoints.png|418]] -->
@@ -55,7 +57,7 @@ Here $f(x)$ is left as a black box for now, but of course we will get to that la
 Secondly, the inner function is, as mentioned, way more complex, and it is not always clear how it will look in the end. The AI model is given a *model architecture* (basically how the inner function $f$looks) and tries to alter its parameters by looking at different examples of data, so that it can finally (and hopefully) make a useful prediction on a request that is not already included in the training data. This "learning" process is called *training* and is why we are even talking about an "intelligence".
 
 
-#### **Classification**
+## **Classification**
 The most common usecase for the process described above is a so called *classification* in which you do not want to predict a specific value like the price of a house, but rather try to identify your input as an object out of a given list of classes. For example, a well-known task is the distinction between animals shown on a photograph.
 
 Let us assume that you want to know whether your image shows a dog, a cat or a mouse. These are our three classes and we want to categorise our input and assign it to one of them. Also, for simplicity we assume that only one of the three animal types is present at the same time. In this case you would take the color values of each pixel of the image as the input and plug it into our "magic" function $f$. It is still not important what that function does, because we just briefly want to address how the output would look like.
