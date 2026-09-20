@@ -193,9 +193,47 @@ The following layer then would continue to group these clusters even more. Does 
 
 Every layer of neurons adds a new layer of abstraction of the image. All pixels are clustered differently again and again until, in the end, the network can make a decision by looking at all the present features in the image.
 
-#### **The Activation Function**
-The described mechanism can also be interpreted as a *regression*, which it basically is. We
 
+
+
+#### **The Activation Function**
+The described mechanism can also be interpreted as a *regression*, which it basically is. We have some datapoints in a very high dimensional space (in our case we have 784 plus additional 10 dimensions to be exact, because we have 784 inputs and 10 outputs) and our *Neural Network* tries to approximate them using a very complex function that is described with neurons, weights and biases. But eventhough this function becomes very complex very quickly it has one problem: It is linear.
+
+We neither use any exponential functions, nor logarithms, nor roots, not even an exponent higher than one. This means that the process of regression is limited to linear dependencies, but luckily there is a simple way to counter that issue. It is called an *Activation Function.*
+Basically, we add a non-linear function that is applied to every parameter of the calculated vector after every layer. The function itself does not contain any parameters that change during training, but ensure that the other parameters can have a non-linear influence on the output.
+The manipulated output if a layer is called an *activation* and is what is actually passed on to the next layer.
+
+A *Neural Network* $NN$ with one layer and one activation function $a$ looks like this:
+
+$$
+\text{NN}(\vec{in}) = {}^La\left(\vec{in} \cdot {}^{L}W + {}^L\vec{b}\,\right)
+$$
+
+Two layers look like this:
+
+$$
+\begin{aligned}
+\text{NN}(\vec{in}) &=
+{}^La
+\left({}^{L-1}a \left(\vec{in} \cdot {}^{L-1}W + {}^{L-1}\vec{b}\,\right)
+\cdot {}^LW + {}^L\vec{b}\,\right) \\
+&= \vec{out}
+\end{aligned}
+$$
+
+And so on.
+There are a lot of different types of activation functions like the *Sigmoid function* or *Tanh*, but one of the most commonly used and easy to calculate functions is the *ReLU*, which is the short form for *Rectified Linear*.
+It just sets all negative values of its input to zero and does not change anything on the positive values.
+*ReLU* as a function for some value $x$ has the following form:
+
+$$
+\text{ReLU}(x) =
+\begin{cases}
+0 & \text{for } x < 0, \\ x & \text{for } x \ge 0.
+\end{cases}
+$$
+
+It results in this graph and is thus not linear:
 
 {{< figure
   src="/images/Activation_ReLU.png"
@@ -203,10 +241,143 @@ The described mechanism can also be interpreted as a *regression*, which it basi
   link=""
 >}}
 
+#### **The Calculation of a Batch**
+Up to this point we only talked about processing one *sample* as a vector. But we can actually calculate multiple *samples* at once as a *batch*. It is done quite easily by writing multiple samples into a matrix instead of processing them one after another in a vector. Every row becomes a sample while the columns contain the respective features. So we group multiple input vectors $\vec{in}$ as one input matrix $I$.
 
+$$
+I \in \mathbb{R}^{s, f},
+\quad
+s, f \in \mathbb{N},
+\quad
+\text{for $s$ samples and $f$ features}
+$$
+
+The formula for one layer basically stays the same because a matrix multiplication can really just be interpreted as a multiplication of multiple vectors with a matrix, where the output $O$ is a matrix that holds the result for every input vector as a row.
+
+$$
+{}^LO = {}^La\left({}^{L-1}I \cdot {}^{L}W+ {}^L\vec{b}\,\right)
+$$
+
+The activation function ${}^La$ of that layer $L$ is just applied to every element of that matrix and every element of the bias vector $\vec{b}$ is added to every value of its respective column in the matrix. The output ${}^LO$ is then passed forward to the next layer $L+1$.
+
+#### **The Last Layer**
+Finally, when the input has gone through all layers except for the last one, this last layer receives a matrix as every layer until then. Even better, this input matrix is processed nearly the same way as before. The layer multiplies it with its weight matrix to set up the right amount of dimensions and furthermore adds a bias vector. The only difference is the activation function $a$.
+In our example, where out of the ten classes only one will be predicted, the output vectors (inside the output matrix $O$) are transformed into a probability distribution using the *Softmax* function $\sigma$.
+
+$$
+\sigma(X_{i,j})=
+\frac{e^{X_{i,j}}}
+{\sum_{k=0}^{dim(X_i)-1}{e^{X_{i,k}}}}
+$$
+
+This means that we raise $e$ to every element of the inputed matrix $X$ and divide it by the sum of every element of the same row (also as an exponent of e). We raise $e$ and do not just divide every element by the sum of its row, to ensure that we do not get any negative values as a result while not changing the order of the values.
+An example for three classes could look like this:
+
+$$
+X =
+\begin{pmatrix}
+-1 & 3 & 2\\
+2 & -2 & 0
+\end{pmatrix}
+$$
+
+This matrix $X$ contains the so called *logits*, which is the output of two samples of the network before applying the activation function.
+After using $\sigma$ on every element it becomes approximately this:
+
+$$
+O =
+\begin{pmatrix}
+0.01 & 0.72 & 0.27\\
+0.87 & 0.01 & 0.12
+\end{pmatrix}
+$$
+
+This output would predict the second class for the first sample with 72% and the first class for the second sample with 87% because they are the highest values in each row.
+
+Notice how the order of the values in each row does not change at all. The highest value stays the highest and the lowest stays the lowest. This means that we do not actually need the softmax function to make a prediction because we can just look at the highest value of the *logits* and take that as the predicted class. But we need the softmax function firstly to make the output more accessible for humans and secondly to calculate how wrong the prediction of the network was which is needed to adjust the internal parameters of the network and make it learn.
+
+#### **The Loss Function**
+Now that we have a predicted probability distribution of an input we can begin to calculate the accuracy of that prediction. This is done using a *Loss* or *Cost* function. As a reminder, we want the neuron of the right class to be close to $1$ and all the other neurons to be close to $0$. Also, our training data is labeled. This means that for every sample we give as a input we already know the right result and thus which neuron is the one that needs to be highest. In general, we calculate a batch of samples and compare the network's prediction with the right solution. The closer the loss is to $0$ the better the prediction; a high loss indicates a bad prediction. As a consequence we want to minimize the loss during training.
+
+One of the many Loss functions that does exactly that is the *Categorical Cross-Entropy* (*CCE*). It is commonly used for classifications with the softmax function because it is easy to calculate.
+
+This is the formula of the CCE:
+
+$$
+\text{CCE}(\vec{x}, \vec{t}\,)=
+-\!\!\!\!\! \sum_{i=0}^{\text{dim}(\vec{x})-1}{\vec{t}_i \cdot ln(\vec{x_i})},
+\qquad
+\dim(\vec{x})
+= \dim(\vec{t}\,)
+$$
+
+The vector $\vec{x}$ is a probability vector of a prediction, like the ones in our output matrix $O$, and the vector $\vec{t}$ are the *targets*, which are the wanted values of the respective neurons with the same index in the output. A target vector for the classification of the number $4$ would look like this:
+
+$$
+\vec{t} =
+\begin{bmatrix}
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+\end{bmatrix}
+$$
+
+We will not dive deeper into the reasons for the exact formula of the *CCE* above because, for our scenario, it shortens a lot and it becomes quite clear why it works for us.
+As you may have noticed all values of $\vec{x}$ are multiplied by their corresponding target value which is $0$ for most values and $1$ for the targeted class. Consequently, the formula shortens to this:
+
+$$
+\text{CCE}(\vec{x}, t)
+= -ln(\vec{x}_t)
+$$
+
+Here, $t$ stands for the index of our target neuron, hence we get the negative natural logarithm of the value of the neuron that represents the targeted class.
+If we look at the graph for that function, it perfectly matches our needed properties.
+
+{{< figure
+  src="/images/Loss_CCE.png"
+  alt="Loss_CCE"
+  link=""
+>}}
+
+
+A perfect prediction of the right class with $100\%$ results in a loss of $0$ while the loss skyrockets to infinity when the prediction comes closer to $0\%$. Additionally, it makes sense that we only look at one value of the output vector because all elements are dependent on each other due to them being part of the same probability distribution. If the target value is high, all the other values become average low.
+
+But we can go even further and can compress the calculations done even more by combining the softmax $\sigma$ with the CCE.
+Because we only need one probability value for the loss calculation we do not need to calculate it for every logit. Thus we do the softmax calculation for the target value only and then plug the result into the loss function.
+
+$$
+\sigma(X_{i,t})=
+\dfrac{e^{X_{i,t}}}
+{\sum_{k=0}^{\dim(X_i)-1}{e^{X_{i,k}}}}
+$$
+
+Above you can see the softmax function for the target logit, indicated by the index $t$.
+
+$$
+s(\vec{x}) = \sum_{i=0}^{dim(\vec{x})-1}{e^{\vec{x}_{i}}}
+\qquad
+\sigma(X_{i,t})=
+\frac{e^{X_{i,t}}}
+{s(X_i)}
+$$
+
+For a more concise notation we write the exponential sum of the row as an external function $s(\vec{x})$.
+Now we combine the loss with that new version of the softmax function.
+
+$$
+\begin{aligned}
+L(X_{i,t})
+&= -ln\left(\sigma\small(X_{i,t})\right)
+=-ln\left(\frac{e^{X_{i,t}}}{s\small(X_i)}\right)\\
+&=-\Big(ln(e^{X_{i,t}})-ln\left(s\small(X_i)\right)\Big)\\
+&=-\Big(X_{i,t}-ln\left(s\small(X_i)\right)\Big)\\
+&=ln\left(s\small(X_i)\right) - X_{i,t}\\
+\end{aligned}
+$$
+
+As a conclusion, we can calculate the loss of a sample by adding up all its logits and, taking the natural logarithm of that sum and finally subtract the value that should be the highest according to our labeled dataset. For a batch $I$ that results in the logits $X$ we just take the mean of all the losses of the samples in that batch.
+
+## **The Backward Pass**
 #### **The Last Layer**
 
 #### **The Loss Function**
 
-## The Backward Pass
 ## Stochastic Gradient Descent
