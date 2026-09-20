@@ -131,6 +131,12 @@ Contributions are welcome! To contribute:
 MIT License - see [LICENSE](LICENSE) for details
 
 # Acknowledgments
+
+Special thanks go to [Verein PITRIMKA](https://pitrimka.de/)!
+
+The people there were a great help during the project, especially Dr Mikhail Solovetchik.
+He was our mentor throughout the project.
+
 TamingAI makes use of a variety of open source projects including:
 
 * https://github.com/phoebetronic/mnist
