@@ -4,9 +4,6 @@ description = "The fundamental mechanism behind Neural Networks"
 date = "2026-09-17"
 +++
 
-[MNIST](https://en.wikipedia.org/wiki/MNIST_database)
-[here](/post/the-basic-idea-behind-artificial-intelligence "The Basic Idea Behind Artificial Intelligence")
-
 
 We assume that you are coming from this article right [here](/post/the-basic-idea-behind-artificial-intelligence "The Basic Idea Behind Artificial Intelligence"). If you have not read it yet, we highly recommend to catch up on it before continuing.
 
@@ -73,15 +70,6 @@ m \in \mathbb{N},
 \text{m is the number of neurons in the layer L}
 $$
 
-$$
-\begin{aligned}
-{}^L\,\vec{n} = [{}^Ln_0, {}^Ln_1,..., {}^Ln_{m-1}]
-\qquad
-m \in \mathbb{N},
-\quad \text{m is the number of neurons in the layer L}
-\end{aligned}
-$$
-
 The input vector of one of the digits of the earlier mentioned MNIST dataset, in which each of the $28*28$ pixels $p$ is represented by one tone of gray, would therefore look like this:
 
 $$
@@ -97,20 +85,8 @@ p_0 & p_1 & \dots & p_{28 \cdot 28 - 1}
 \end{aligned}
 $$
 
-$$
-\begin{aligned}
-\vec{in} &= [p_0,p_1, ..., p_{28*28-1}]\\
-&=[{}^0n_0,{}^0n_1,...{}^0n_{783}]\\
-&= {}^0\,\vec{n}
-\end{aligned}
-$$
-
 Now, we got an input with which we can begin to calculate our first *layer* $L=1$.
 For every *neuron* ${}^1n_i$ the following formula applies:
-
-$$
-{}^1n_i = \sum_{j=0}^{783} {}^0\vec{n}_j\vec{w}_j
-$$
 
 $$
 {}^1n_i = \sum_{j=0}^{783} {}^0\vec{n}_j\vec{w}_j
@@ -123,12 +99,6 @@ $$
 {}^1n_i = {}^0\vec{n} \cdot \vec{w}
 \qquad
 \dim({}^0\vec{n}) = \dim(\vec{w})
-$$
-
-$$
-{}^1n_i = {}^0\vec{n} \cdot \vec{w}
-\qquad
-dim({}^0\vec{n}) = dim(\vec{w})
 $$
 
 We can take this even further by combining every *weight vector* of every neuron in a layer in form of a *weight matrix* ${}^LW$ like this:
@@ -149,18 +119,6 @@ m &= \dim({}^{L}\vec{n}) \\
 \end{aligned}
 $$
 
-$$
-{}^LW =
-\begin{pmatrix}
-{}^Lw_{0,0} & {}^Lw_{0,1} & \cdots & {}^Lw_{0,m-1}\\
-{}^Lw_{1,0} & {}^Lw_{1,1} & \cdots & {}^Lw_{1,m-1}\\
-\vdots & \vdots & \ddots & \vdots\\
-{}^Lw_{n-1,0} & {}^Lw_{n-1,1} & \cdots & {}^Lw_{n-1,m-1}\\
-\end{pmatrix}
-\qquad
-{}^LW \in \mathbb{R}^{in, out}\\
-$$
-
 Every column now represents all the weights of one neuron of the layer that is being calculated while every row stands for one neuron of the input from the previous layer.
 If we continue this idea and take the dot product of our input vector ${}^{L-1}\vec{n}$ and the weight matrix ${}^LW$ of the current layer, we get the correct value of each neuron according to the graph (*figure 1*).
 
@@ -170,21 +128,7 @@ $$
 {}^{L}\vec{n}
 $$
 
-$$
-{}^{L-1}\vec{n} \cdot {}^LW
-\quad=\quad
-{}^{L}\vec{n}
-$$
-
 If we have $n$ *neurons* in layer $L-1$ and $m$ *neurons* in *layer* $L$, the dimensions of the containers look like this:
-
-$$
-{}^{L-1}\vec{n} \in \mathbb{R}^n
-\qquad
-{}^{L}W \in \mathbb{R}^{n,m}
-\qquad
-{}^{L}\vec{n} \in \mathbb{R}^m
-$$
 
 $$
 {}^{L-1}\vec{n} \in \mathbb{R}^n
@@ -212,24 +156,10 @@ n \in \mathbb{N},
 \text{which is the number of neurons in the layer L}
 $$
 
-$$
-{}^L\vec{b} \in \mathbb{R}^{n}
-\qquad
-n \in \mathbb{N},
-\quad
-\text{which is the number of neurons in the layer L}
-$$
-
 Now, ${}^L\vec{b}$ is just added to the weighted sum to calculate the layer output:
 
 $$
 {}^{L-1}\vec{n} \, \cdot \, {}^LW + {}^L\vec{b} \, = {}^{L}\vec{n}
-$$
-
-$$
-{}^{L-1}\vec{n} \cdot {}^LW + {}^L\vec{b}
-\quad=\quad
-{}^{L}\vec{n}
 $$
 
 The bias is trained during training, too. Thus, it is the second parameter which changes during the training process - like the weights.
@@ -237,17 +167,6 @@ The bias is trained during training, too. Thus, it is the second parameter which
 #### **The Output**
 As mentioned in the introduction, we are looking for a vector with an element for every class that can possibly be predicted by the network. All these elements together form a probability distribution and the index of the highest value indicates the predicted *class*. This probability distribution is not important yet, but we already gained the knowledge to understand how the dimensionality of the output comes into place. And it is fairly simple:
 We just define the last layer of the *Neural Network* to have one *neuron* for every *class*. Mathematically speaking, this means that the last layer $L$ multiplies the output vector of its *predecessor* $L-1$ with a matrix of the dimensions $\text{inputs x classes}$ and hence mapping the input to the dimension we need. The function $NN$ represents all the calculations done inside the network.
-
-$$
-\begin{aligned}
-NN: \mathbb{R}^f \rightarrow \mathbb{R}^c&,
-\qquad
-NN(\vec{in}) = \vec{out}\\
-f, c \in \mathbb{N}&,
-\quad
-\text{mapping \(f\) inputs to \(c\) outputs}
-\end{aligned}
-$$
 
 $$
 \begin{aligned}
@@ -278,11 +197,7 @@ The manipulated output of a layer is called an *activation* and is what is actua
 A *Neural Network* $NN$ with one layer and one activation function $a$ can be described like this:
 
 $$
-\text{NN}(\vec{in}) = {}^La(\vec{in} \cdot {}^{L}W + {}^L\vec{b})
-$$
-
-$$
-\text{NN}(\vec{in}) = {}^La(\vec{in} \cdot {}^{L}W + {}^L\vec{b})
+\text{NN}(\vec{in}) = {}^La\left(\vec{in} \cdot {}^{L}W + {}^L\vec{b}\,\right)
 $$
 
 Extending this notation, two layers look like this:
@@ -290,16 +205,8 @@ Extending this notation, two layers look like this:
 $$
 \text{NN}(\vec{in}) =
 {}^La
-({}^{L-1}a(\vec{in} \cdot {}^{L-1}W + {}^{L-1}\vec{b})
-\cdot {}^LW + {}^L\vec{b})
-= \vec{out}
-$$
-
-$$
-\text{NN}(\vec{in}) =
-{}^La
-({}^{L-1}a(\vec{in} \cdot {}^{L-1}W + {}^{L-1}\vec{b})
-\cdot {}^LW + {}^L\vec{b})
+\left({}^{L-1}a\left(\vec{in} \cdot {}^{L-1}W + {}^{L-1}\vec{b}\,\right)
+\cdot {}^LW + {}^L\vec{b}\,\right)
 = \vec{out}
 $$
 
@@ -307,16 +214,6 @@ And so on.
 
 There are a lot of different types of activation functions like the *Sigmoid function* or *Tanh*, but one of the most commonly used and easy to calculate functions is the *ReLU*, which is the short form for *Rectified Linear Unit*. It just sets all negative values of its input to zero and does not change anything on the positive values.
 *ReLU* as a function for some value $x$ has the following form:
-
-$$
-\text{ReLU}(x)
-= \text{max}(0, x)
-=\begin{cases}
-0 & \text{for } x < 0, \\ x & \text{for } x \ge 0.
-\end{cases}
-\qquad
-x \in \mathbb{R}
-$$
 
 $$
 \text{ReLU}(x)
@@ -349,20 +246,7 @@ s, f \in \mathbb{N},
 $$
 
 $$
-I \in \mathbb{R}^{s, f},
-\quad
-s, f \in \mathbb{N},
-\quad
-\text{for $s$ samples and $f$ features}
-$$
-
-The formula for one layer $L$ basically stays the same because a matrix multiplication can really just be interpreted as a multiplication of multiple vectors with a matrix in which the output ${}^LO$ is a matrix that holds the result for every input vector as a row.
-$$
-{}^LO = {}^La({}^{L-1}I \cdot {}^{L}W+ {}^L\vec{b})
-$$
-
-$$
-{}^LO = {}^La({}^{L-1}I \cdot {}^{L}W+ {}^L\vec{b})
+{}^LO = {}^La\left({}^{L-1}I \cdot {}^{L}W+ {}^L\vec{b}\,\right)
 $$
 
 The activation function ${}^La$ of that layer $L$ is applied to every element of that matrix and every element of the bias vector $\vec{b}$ is added to every value of its respective column in the matrix. The output ${}^LO$ is then passed forward to the successor layer $L+1$.
@@ -377,22 +261,8 @@ $$
 {\sum_{k=0}^{dim(X_i)-1}{e^{X_{i,k}}}}
 $$
 
-$$
-\sigma(X_{i,j})=
-\frac{e^{X_{i,j}}}
-{\sum_{k=0}^{dim(X_i)-1}{e^{X_{i,k}}}}
-$$
-
 This means that we raise $e$ to the power of every element of the inputed matrix $X$ and divide it by the sum of every element of the same row (also as an exponent of e). We raise $e$ and do not just divide every element by the sum of its row to ensure that we do not get any negative values as a result while not changing the order of the values.
 An example for three classes could look like this:
-
-$$
-X =
-\begin{pmatrix}
--1 & 3 & 2\\
-2 & -2 & 0
-\end{pmatrix}
-$$
 
 $$
 X =
@@ -413,14 +283,6 @@ O =
 \end{pmatrix}
 $$
 
-$$
-O =
-\begin{pmatrix}
-0.01 & 0.72 & 0.27\\
-0.87 & 0.01 & 0.12
-\end{pmatrix}
-$$
-
 This output would predict the second class for the first sample with 72% and the first class for the second sample with 87% because these are the highest values in each row.
 
 Notice how the order of the values in each row does not change at all. The highest value stays the highest and the lowest stays the lowest. This means that we would actually not need the softmax function to make a prediction because we can just look at the highest value of the *logits* and take that as the predicted class. Nevertheless, we make use of the softmax function firstly to make the output more accessible to human beings and secondly to calculate how wrong the prediction of the network was. This is needed to adjust the internal parameters of the network and make it learn.
@@ -431,21 +293,11 @@ One of the many *Loss* functions that does exactly that is the *Categorical Cros
 This is the formula of the CCE:
 
 $$
-\text{CCE}(\vec{x}, \vec{t})=
+\text{CCE}(\vec{x}, \vec{t}\,)=
 -\sum_{i=0}^{\text{dim}(\vec{x})-1}{\vec{t}_i \cdot ln(\vec{x_i})},
 \qquad
 \text{dim}(\vec{x})
-= \text{dim}(\vec{t}),
-\qquad
-i \in \mathbb{N}
-$$
-
-$$
-\text{CCE}(\vec{x}, \vec{t})=
--\sum_{i=0}^{\text{dim}(\vec{x})-1}{\vec{t}_i \cdot ln(\vec{x_i})},
-\qquad
-\text{dim}(\vec{x})
-= \text{dim}(\vec{t}),
+= \text{dim}(\vec{t}\,),
 \qquad
 i \in \mathbb{N}
 $$
@@ -453,22 +305,14 @@ $$
 The vector $\vec{x}$ is a probability vector of a prediction, like the ones in our output matrix $O$, and the vector $\vec{t}$ are the *targets* which are the wanted values of the respective neurons with the same index in the output. A target vector for the classification of the number $4$ would look like this:
 
 $$
-\vec{t} = [0,0,0,0,1,0,0,0,0,0]
-$$
-
-$$
-\vec{t} = [0,0,0,0,1,0,0,0,0,0]
+\vec{t} =
+\begin{bmatrix}
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}
 $$
 
 We will not dive deeper into the reasons for the exact formula of the *CCE* because, for our scenario, the formula simplifies a lot and it becomes quite clear why it works for us.
 As you may have noticed, all values of $\vec{x}$ are multiplied by their corresponding target value which is $0$ for most values and $1$ for the targeted class. Consequently, the formula shortens to this:
-
-$$
-\text{CCE}(\vec{x}, t)
-= -ln(\vec{x}_t),
-\qquad
-t \in \mathbb{N}
-$$
 
 $$
 \text{CCE}(\vec{x}, t)
@@ -499,26 +343,8 @@ $$
 i,t,k \in \mathbb{N}
 $$
 
-$$
-\sigma(X_{i,t})=
-\frac{e^{X_{i,t}}}
-{\sum_{k=0}^{dim(X_i)-1}{e^{X_{i,k}}}}
-\qquad
-i,t,k \in \mathbb{N}
-$$
-
 Above you can see the softmax function for the target logit, indicated by the index $t$.
 For a more concise notation we write the exponential sum of the row as an external function $s(\vec{x})$.
-
-$$
-s(\vec{x}) = \sum_{i=0}^{dim(\vec{x})-1}{e^{\vec{x}_{i}}}
-\qquad
-\sigma(X_{i,t})=
-\frac{e^{X_{i,t}}}
-{s(X_i)}
-\qquad
-i,t \in \mathbb{N}
-$$
 
 $$
 s(\vec{x}) = \sum_{i=0}^{dim(\vec{x})-1}{e^{\vec{x}_{i}}}
@@ -535,24 +361,11 @@ Now we combine the loss with that new version of the softmax function. Additiona
 $$
 \begin{aligned}
 L_i(X_{i,t})
-&= -ln(\sigma(X_{i,t}))
-=-ln(\frac{e^{X_{i,t}}}{s(X_i)})\\
-&=-(ln(e^{X_{i,t}})-ln(s(X_i)))\\
-&=-(X_{i,t}-ln(s(X_i)))\\
-&=ln(s(X_i)) - X_{i,t}\\
-\end{aligned}
-\qquad
-i,t \in \mathbb{N}
-$$
-
-$$
-\begin{aligned}
-L_i(X_{i,t})
-&= -ln(\sigma(X_{i,t}))
-=-ln(\frac{e^{X_{i,t}}}{s(X_i)})\\
-&=-(ln(e^{X_{i,t}})-ln(s(X_i)))\\
-&=-(X_{i,t}-ln(s(X_i)))\\
-&=ln(s(X_i)) - X_{i,t}\\
+&= -ln\Big(\sigma(X_{i,t})\Big)
+=-ln\Big(\frac{e^{\scriptstyle X_{i,t}}}{s(X_i)}\Big) \\[0em]
+&=-\Bigg(ln\Big(e^{\scriptstyle X_{i,t}}\Big)-ln\Big(s(X_i)\Big)\Bigg)\\[1.1em]
+&=-\Bigg(X_{i,t}-ln\Big(s(X_i)\Big)\Bigg)\\[1.1em]
+&=ln\Big(s(X_i)\Big) - X_{i,t}\\[1.1em]
 \end{aligned}
 \qquad
 i,t \in \mathbb{N}
@@ -564,14 +377,6 @@ Concludingly, we can calculate the *loss* of a *sample* by
 3. finally, subtract the value that should be the highest according to our labeled dataset.
 
 For a batch $I$ and the resulting *logits* $X$ we just take the mean of all the losses $L_i$ of the *samples* in that *batch* to calculate the general loss $L_G$ of one forward pass..
-
-$$
-L_G=\frac{1}{B}\sum_{i=0}^{B-1}{L_i(O_{i,\vec{t}_i})}
-\qquad
-B,i \in \mathbb{N}
-\qquad
-\vec{t} \in \mathbb{N}^B
-$$
 
 $$
 L_G=\frac{1}{B}\sum_{i=0}^{B-1}{L_i(O_{i,\vec{t}_i})}
@@ -595,12 +400,6 @@ $$
 \text{this is what we want to know for every parameter \(p\) of our network}
 $$
 
-$$
-\frac{\partial{L}}{\partial{p}},
-\quad
-\text{this is what we want to know for every parameter \(p\) of our network}
-$$
-
 Due to all the derivatives of a layer being dependent on its successor's gradients, the gradients are calculated from back to front of the network. This is why the process is called a *backward pass*.
 
 #### **The Loss Gradient**
@@ -608,18 +407,9 @@ Firstly, we need the influence of every output ${}^LO_{i,j}$ of the last layer o
 
 $$
 L_i(O_{i,t})
-=ln(s(O_i)) - O_{i,t}
+=ln\Big(s(O_i)\Big) - O_{i,t}
 \qquad
-s(\vec{x}) = \sum_{i=0}^{dim(\vec{x})-1}{e^{\vec{x}_{i}}}
-\qquad
-i,t \in \mathbb{N}
-$$
-
-$$
-L_i(O_{i,t})
-=ln(s(O_i)) - O_{i,t}
-\qquad
-s(\vec{x}) = \sum_{i=0}^{dim(\vec{x})-1}{e^{\vec{x}_{i}}}
+s(\vec{x}) = \!\!\!\!\! \sum_{i=0}^{dim(\vec{x})-1}{e^{\vec{x}_{i}}}
 \qquad
 i,t \in \mathbb{N}
 $$
@@ -628,39 +418,19 @@ If $j = t$ the value ${}^LO_{i,j}$ is to be found in the sum of all values in th
 
 $$
 \begin{aligned}
-\frac{\partial{L_i}}{\partial{{}^LO_{i,j}}} &= \frac{\partial}{\partial{{}^LO_{i,j}}}(ln(s(O_i)) - O_{i,t})\\
+\frac{\partial{L_i}}{\partial{{}^LO_{i,j}}} &= \frac{\partial}{\partial{{}^LO_{i,j}}}\Bigg(ln\Big(s(O_i)\Big) - O_{i,t}\Bigg)\\[1.1em]
 &= \begin{cases}
-\frac{\partial}{\partial{{}^LO_{i,j}}}(ln(s(O_i))- O_{i,t}) & \text{for } j = t\\
-\frac{\partial}{\partial{{}^LO_{i,j}}}(ln(s(O_i))) & \text{for } j \ne t\\
-\end{cases}\\
+\frac{\partial}{\partial{{}^LO_{i,j}}}\Big(ln\Big(s(O_i)\Big)- O_{i,t}\Big) & \text{for } j = t\\[0.9em]
+\frac{\partial}{\partial{{}^LO_{i,j}}}\Big(ln\Big(s(O_i)\Big)\Big) & \text{for } j \ne t\\[0.4em]
+\end{cases}\\[1.4em]
 &= \begin{cases}
-\frac{1}{s(O_i)} \cdot e^{O_{i,j}}-1 & \text{for } j = t\\
-\frac{1}{s(O_i)} \cdot e^{O_{i,j}} & \text{for } j \ne t\\
-\end{cases}\\
+\frac{1}{s(O_i)} \cdot e^{O_{i,j}}-1 & \text{for } j = t\\[0.4em]
+\frac{1}{s(O_i)} \cdot e^{O_{i,j}} & \text{for } j \ne t\\[0.4em]
+\end{cases}\\[1.4em]
 &= \begin{cases}
-\sigma({}^LO_{i,j})-1 & \text{for } j = t\\
-\sigma({}^LO_{i,j}) & \text{for } j \ne t\\
-\end{cases}
-\end{aligned}
-\qquad
-i,j,t \in \mathbb{N}
-$$
-
-$$
-\begin{aligned}
-\frac{\partial{L_i}}{\partial{{}^LO_{i,j}}} &= \frac{\partial}{\partial{{}^LO_{i,j}}}(ln(s(O_i)) - O_{i,t})\\
-&= \begin{cases}
-\frac{\partial}{\partial{{}^LO_{i,j}}}(ln(s(O_i))- O_{i,t}) & \text{for } j = t\\
-\frac{\partial}{\partial{{}^LO_{i,j}}}(ln(s(O_i))) & \text{for } j \ne t\\
-\end{cases}\\
-&= \begin{cases}
-\frac{1}{s(O_i)} \cdot e^{O_{i,j}}-1 & \text{for } j = t\\
-\frac{1}{s(O_i)} \cdot e^{O_{i,j}} & \text{for } j \ne t\\
-\end{cases}\\
-&= \begin{cases}
-\sigma({}^LO_{i,j})-1 & \text{for } j = t\\
-\sigma({}^LO_{i,j}) & \text{for } j \ne t\\
-\end{cases}
+\sigma({}^LO_{i,j})-1 & \text{for } j = t\\[0.4em]
+\sigma({}^LO_{i,j}) & \text{for } j \ne t\\[0.4em]
+\end{cases}\\[0.4em]
 \end{aligned}
 \qquad
 i,j,t \in \mathbb{N}
@@ -668,14 +438,6 @@ $$
 
 Interestingly, the gradient of the logits ${}^LO$ of the last layer $L$ is just the softmax function of each element ${}^LO_{i,j}$ minus the target value of each logit which is either $1$ or $0$. The operation $-0$, of course, is not visible in the last step of the second case.
 But we still have to multiply every derivative with the constant $\frac{1}{B}$ since we took the mean of the loss of every sample in the batch to create one general loss $L_G$ like this:
-
-$$
-L_G=\frac{1}{B}\sum_{i=0}^{B-1}{L(O_{i,\vec{t}_i})}
-\qquad
-B,i \in \mathbb{N}
-\qquad
-\vec{t} \in \mathbb{N}^B
-$$
 
 $$
 L_G=\frac{1}{B}\sum_{i=0}^{B-1}{L(O_{i,\vec{t}_i})}
@@ -699,18 +461,6 @@ $$
 i,j,t,B \in \mathbb{N}
 $$
 
-$$
-\begin{aligned}
-\frac{\partial{L_G}}{\partial{{}^LO_{i,j}}} &= \frac{1}{B} \cdot \frac{\partial{L_i}}{\partial{{}^LO_{i,j}}}\\
-&= \begin{cases}
-\frac{1}{B} \cdot \sigma({}^LO_{i,j})-1 & \text{for } j = t\\
-\frac{1}{B} \cdot \sigma({}^LO_{i,j}) & \text{for } j \ne t\\
-\end{cases}
-\end{aligned}
-\qquad
-i,j,t,B \in \mathbb{N}
-$$
-
 If we apply this to every element of our logits we obtain a gradient matrix $G$ with the same dimensions as ${}^LO$ which tells us exactly how much the loss $L_G$ would change if we changed one of the values inside of ${}^LO$.
 
 #### **The Chain Rule**
@@ -720,15 +470,8 @@ The outer activation function is swapped with the loss $L$.
 $$
 \text{NN}(I) =
 L_G
-({}^{L-1}a(I \cdot {}^{L-1}W + {}^{L-1}\vec{b})
-\cdot {}^LW + {}^L\vec{b})
-$$
-
-$$
-\text{NN}(I) =
-L_G
-({}^{L-1}a(I \cdot {}^{L-1}W + {}^{L-1}\vec{b})
-\cdot {}^LW + {}^L\vec{b})
+\Big({}^{L-1}a\left(I \cdot {}^{L-1}W + {}^{L-1}\vec{b}\,\right)
+\cdot {}^LW + {}^L\vec{b}\Big)
 $$
 
 If we look at this function, we can trace back how the derivative of ${}^{L-1}W$ in respect to $L_G$ is calculated according to the chain rule.
@@ -740,21 +483,7 @@ $$
 \frac{\partial L_G} {\partial {}^{L-1}a}
 $$
 
-$$
-\frac{\partial L_G}{\partial{}^{L-1}W}
-= \frac{\partial {}^{L-1}a} {\partial {}^{L-1}W}
-\cdot
-\frac{\partial L_G} {\partial {}^{L-1}a}
-$$
-
 This works the same way for the bias vector $\vec{b}$, the input $I$ or even the output ${}^{L-2}O$ of the layer $L-2$ if we had one in this example.
-
-$$
-\frac{\partial L_G}{\partial{}^{L-2}O}
-= \frac{\partial {}^{L-1}a} {\partial {}^{L-2}O}
-\cdot
-\frac{\partial L_G} {\partial {}^{L-1}a}
-$$
 
 $$
 \frac{\partial L_G}{\partial{}^{L-2}O}
@@ -777,16 +506,8 @@ $$
 \text{dim}(G_X)=\text{dim}({}^LX)
 $$
 
-$$
-\text{dim}(G_X)=\text{dim}({}^LX)
-$$
-
 **1. The Bias Gradient**
 Due to the bias being a constant that is added to the weighted sum of the input neurons, its derivative is zero and, thus, ignores the input ${}^{L-1}O$ and the weight matrix ${}^LW$ completely.
-
-$$
-{}^LX = {}^{L-1}O \cdot {}^{L}W+ {}^L\vec{b}
-$$
 
 $$
 {}^LX = {}^{L-1}O \cdot {}^{L}W+ {}^L\vec{b}
@@ -800,19 +521,7 @@ $$
 i \in \mathbb{N}
 $$
 
-$$
-{}^LX_{i} = {}^{L-1}O_i \cdot {}^{L}W+ {}^L\vec{b}
-\qquad
-i \in \mathbb{N}
-$$
-
 This indicates that the derivative of every bias ${}^L\vec{b}_j$ is just $1$.
-
-$$
-\frac{\partial {}^LX_{i,j}}{\partial {}^L\vec{b}_j}=1
-\qquad
-i,j \in \mathbb{N}
-$$
 
 $$
 \frac{\partial {}^LX_{i,j}}{\partial {}^L\vec{b}_j}=1
@@ -837,28 +546,7 @@ $$
 i,j \in \mathbb{N}
 $$
 
-$$
-\begin{aligned}
-\frac{\partial L_G}{\partial {}^L\vec{b}_j} &=
-\frac{\partial {}^LX_{i,j}}{\partial {}^L\vec{b}_j}
-\cdot
-\frac{\partial L_G} {\partial {}^LX_{i,j}}\\
-&= \frac{\partial {}^LX_{i,j}}{\partial {}^L\vec{b}_j}
-\cdot
-(G_X)_{i,j}\\
-&=(G_X)_{i,j}
-\end{aligned}
-\qquad
-i,j \in \mathbb{N}
-$$
-
 Therefore, the gradient of one bias is just the gradient of the corresponding neuron's output, but because we process multiple samples at once we calculate the mean of all the influences that neuron has on every sample $s$.
-
-$$
-(\vec{g_b})_i=\sum_{s=0}^{B-1}{(G_X)_{s,i}}
-\qquad
-i,s,B \in \mathbb{N}
-$$
 
 $$
 (\vec{g_b})_i=\sum_{s=0}^{B-1}{(G_X)_{s,i}}
@@ -880,14 +568,6 @@ X_{s,i}
 i,j,s \in \mathbb{N}
 $$
 
-$$
-X_{s,i}
-=\sum_{j=0}^{\text{dim}({}^{L-1}O_s)-1} {{}^{L-1}O_{s,j}\cdot {}^LW_{j,i}}
-\quad + \vec{b}_i
-\qquad
-i,j,s \in \mathbb{N}
-$$
-
 The partial derivative of one weight ${}^LW_{j,i}$ hence becomes:
 
 $$
@@ -895,22 +575,7 @@ $$
 = {}^{L-1}O_{s,j}
 $$
 
-$$
-\frac{\partial X_{s,i}} {\partial{}^LW_{j,i}}
-= {}^{L-1}O_{s,j}
-$$
-
 Applying the chain rule yields:
-
-$$
-\begin{aligned}
-\frac{\partial L_G} {\partial{}^LW_{j,i}} &=
-\frac{\partial X_{s,i}} {\partial{}^LW_{j,i}} \cdot \frac{\partial L_G} {\partial {}^LX_{s,i}}\\
-&= {}^{L-1}O_{s,j}
-\cdot
-(G_X)_{s,i}
-\end{aligned}
-$$
 
 $$
 \begin{aligned}
@@ -933,20 +598,7 @@ $$
 \end{aligned}
 $$
 
-$$
-\begin{aligned}
-\frac{\partial L_G} {\partial{}^LW_{j,i}}
-&= \sum_{s=0}^{B-1}{}^{L-1}O_{s,j}
-\cdot
-(G_X)_{s,i}
-\end{aligned}
-$$
-
 The formula above can be concisely written for every weight of ${}^LW$ as a matrix multiplication between the transformed input ${}^{L-1}O$ and the gradient $G_X$. As a result we receive the weight gradient $G_W$:
-
-$$
-G_W = ({}^{L-1}O)^T \cdot G_X
-$$
 
 $$
 G_W = ({}^{L-1}O)^T \cdot G_X
@@ -958,23 +610,10 @@ Again, we take the formula for one neuron and take the derivative - this time fo
 
 $$
 X_{s,i}
-=\sum_{j=0}^{\text{dim}({}^{L-1}O_s)-1} {{}^{L-1}O_{s,j}\cdot {}^LW_{j,i}}
+=\!\!\!\! \sum_{j=0}^{\text{dim}({}^{L-1}O_s)-1} {{}^{L-1}O_{s,j}\cdot {}^LW_{j,i}}
 \quad + \vec{b}_i
 \qquad
 i,j,s \in \mathbb{N}
-$$
-
-$$
-X_{s,i}
-=\sum_{j=0}^{\text{dim}({}^{L-1}O_s)-1} {{}^{L-1}O_{s,j}\cdot {}^LW_{j,i}}
-\quad + \vec{b}_i
-\qquad
-i,j,s \in \mathbb{N}
-$$
-
-$$
-\frac{\partial X_{s,i}} {\partial{}^{L-1}O_{s,j}}
-= {}^LW_{j,i}
 $$
 
 $$
@@ -983,16 +622,6 @@ $$
 $$
 
 Again, applying the chain rule provides:
-
-$$
-\begin{aligned}
-\frac{\partial L_G} {\partial{}^{L-1}O_{s,j}} &=
-\frac{\partial X_{s,i}} {\partial{}^{L-1}O_{s,j}} \cdot \frac{\partial L_G} {\partial {}^LX_{s,i}}\\
-&= {}^LW_{j,i}
-\cdot
-(G_X)_{s,i}
-\end{aligned}
-$$
 
 $$
 \begin{aligned}
@@ -1016,21 +645,7 @@ $$
 f \in \mathbb{N}
 $$
 
-$$
-\frac{\partial L_G} {\partial{}^{L-1}O_{s,j}}
-= \sum_{i=0}^{f-1}
-{}^LW_{j,i}
-\cdot
-(G_X)_{s,i}
-\qquad
-f \in \mathbb{N}
-$$
-
 For this expression too, there exists a concise notation as a matrix multiplication:
-
-$$
-G_O=G_X \cdot ({}^LW)^T
-$$
 
 $$
 G_O=G_X \cdot ({}^LW)^T
@@ -1060,42 +675,10 @@ $$
 \qquad
 i,j \in \mathbb{N}
 \qquad
-\text{dim}(I) = \text{dim}(\frac{\partial A}{\partial I})
-$$
-
-$$
-\frac{\partial A_{i,j}}{\partial I_{i,j}} =
-\begin{cases}
-0 & \text{for } I_{i,j} < 0,\\
-1 & \text{for } I_{i,j} \ge 0.
-\end{cases}
-\qquad
-i,j \in \mathbb{N}
-\qquad
-\text{dim}(I) = \text{dim}(\frac{\partial A}{\partial I})
+\text{dim}(I) = \text{dim}\left(\frac{\partial A}{\partial I}\right)
 $$
 
 Then, we apply the respective gradients $G_A$ which we get from the successor layer:
-
-$$
-\begin{aligned}
-(G_I)_{i,j} &=
-\frac{\partial A_{i,j}}{\partial I_{i,j}} \cdot \frac{\partial L_G}{\partial A_{i,j}}\\
-&=(G_A)_{i,j}\cdot
-\begin{cases}
-0 & \text{for } I_{i,j} < 0\\
-1 & \text{for } I_{i,j} \ge 0
-\end{cases}\\
-&=\begin{cases}
-0 & \text{for } I_{i,j} < 0\\
-(G_A)_{i,j} & \text{for } I_{i,j} \ge 0
-\end{cases}
-\end{aligned}
-\qquad
-i,j \in \mathbb{N}
-\qquad
-\text{dim}(I) = \text{dim}(G_I)
-$$
 
 $$
 \begin{aligned}
@@ -1121,12 +704,6 @@ This gets us the gradient $G_I$ of the input $I$.
 
 #### **Applying The Gradients**
 Finally, the only thing that is left to do after having calculated every gradient of every parameter of the network is to apply them to the parameters. Since we want to go in the opposite direction than the one the slope is pointing, we subtract the every gradient $g_p$ of the respective parameter $p$ to receive the new parameter $p_{t+1}$.
-
-$$
-p_{t+1} = p - \eta \cdot g_p
-\qquad
-t \in \mathbb{N}
-$$
 
 $$
 p_{t+1} = p - \eta \cdot g_p
