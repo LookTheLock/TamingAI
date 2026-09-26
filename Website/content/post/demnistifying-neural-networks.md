@@ -23,6 +23,7 @@ Example of the number nine:
   link=""
 >}}
 
+<!--![[assets/images/MNIST_9.png]]  -->
 
 The dataset preserves $60,000$ labeled images to train on and additional $10,000$ labeled images to test the model's accuracy on unseen data.
 Our task will be to train a Neural Network with these digits so that it will be able to identify the digits from $0$ to $9$, of the same format, and yield a most probably correct response on which one it is.
@@ -233,6 +234,7 @@ It results in the following graph and, thus, is not linear:
   link=""
 >}}
 
+<!--![[assets/images/Activation_ReLU.png]]  -->
 
 #### **The Calculation of a Batch**
 Up to this point we talked about processing only one *sample* as a *vector*. But we can actually calculate multiple *samples* at once as a *batch*. It is done quite easily by writing multiple samples into a matrix instead of processing them one after another in a vector. Every row becomes a sample while the columns contain the respective features. So, we group multiple input vectors $\vec{in}$ as one input matrix $I$.
@@ -306,9 +308,11 @@ The vector $\vec{x}$ is a probability vector of a prediction, like the ones in o
 
 $$
 \vec{t} =
-\begin{bmatrix}
+\Big[\,
+\begin{matrix}
 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0
-\end{bmatrix}
+\end{matrix}
+\,\Big]
 $$
 
 We will not dive deeper into the reasons for the exact formula of the *CCE* because, for our scenario, the formula simplifies a lot and it becomes quite clear why it works for us.
@@ -329,6 +333,8 @@ If we look at the graph for that function, it perfectly matches our needed prope
   alt="Loss_CCE"
   link=""
 >}}
+
+<!-- ![[assets/images/Loss_CCE.png]] -->
 
 A perfect prediction of the right class with $100\%$ results in a loss of $0$ while the loss skyrockets to infinity when the prediction comes closer to $0\%$. Additionally, it makes sense that we only look at one value of the output vector because all elements are dependent on each other due to them being part of the same probability distribution. If the target value is high, the average of all the other values becomes low.
 
@@ -362,10 +368,10 @@ $$
 \begin{aligned}
 L_i(X_{i,t})
 &= -ln\Big(\sigma(X_{i,t})\Big)
-=-ln\Big(\frac{e^{\scriptstyle X_{i,t}}}{s(X_i)}\Big) \\[0em]
-&=-\Bigg(ln\Big(e^{\scriptstyle X_{i,t}}\Big)-ln\Big(s(X_i)\Big)\Bigg)\\[1.1em]
-&=-\Bigg(X_{i,t}-ln\Big(s(X_i)\Big)\Bigg)\\[1.1em]
-&=ln\Big(s(X_i)\Big) - X_{i,t}\\[1.1em]
+=-ln\Big(\frac{e^{\scriptstyle X_{i,t}}}{s(X_i)}\Big) \\[0.4em]
+&=-\Big(ln\Big(e^{\scriptstyle X_{i,t}}\Big)-ln\Big(s(X_i)\Big)\Big)\\[0.4em]
+&=-\Big(X_{i,t}-ln\Big(s(X_i)\Big)\Big)\\[0.4em]
+&=ln\Big(s(X_i)\Big) - X_{i,t}\\[0.4em]
 \end{aligned}
 \qquad
 i,t \in \mathbb{N}
@@ -418,19 +424,19 @@ If $j = t$ the value ${}^LO_{i,j}$ is to be found in the sum of all values in th
 
 $$
 \begin{aligned}
-\frac{\partial{L_i}}{\partial{{}^LO_{i,j}}} &= \frac{\partial}{\partial{{}^LO_{i,j}}}\Bigg(ln\Big(s(O_i)\Big) - O_{i,t}\Bigg)\\[1.1em]
+\frac{\partial{L_i}}{\partial{{}^LO_{i,j}}} &= \frac{\partial}{\partial{{}^LO_{i,j}}}\Big(ln\Big(s(O_i)\Big) - O_{i,t}\Big)\\[0.8em]
 &= \begin{cases}
-\frac{\partial}{\partial{{}^LO_{i,j}}}\Big(ln\Big(s(O_i)\Big)- O_{i,t}\Big) & \text{for } j = t\\[0.9em]
+\frac{\partial}{\partial{{}^LO_{i,j}}}\Big(ln\Big(s(O_i)\Big)- O_{i,t}\Big) & \text{for } j = t\\[0.4em]
 \frac{\partial}{\partial{{}^LO_{i,j}}}\Big(ln\Big(s(O_i)\Big)\Big) & \text{for } j \ne t\\[0.4em]
-\end{cases}\\[1.4em]
+\end{cases}\\[0.4em]
 &= \begin{cases}
 \frac{1}{s(O_i)} \cdot e^{O_{i,j}}-1 & \text{for } j = t\\[0.4em]
 \frac{1}{s(O_i)} \cdot e^{O_{i,j}} & \text{for } j \ne t\\[0.4em]
-\end{cases}\\[1.4em]
+\end{cases}\\[0.8em]
 &= \begin{cases}
 \sigma({}^LO_{i,j})-1 & \text{for } j = t\\[0.4em]
 \sigma({}^LO_{i,j}) & \text{for } j \ne t\\[0.4em]
-\end{cases}\\[0.4em]
+\end{cases}\\[0.8em]
 \end{aligned}
 \qquad
 i,j,t \in \mathbb{N}
@@ -451,9 +457,9 @@ The corrected derivative for the general loss $L_G$ can furthermore be found wit
 
 $$
 \begin{aligned}
-\frac{\partial{L_G}}{\partial{{}^LO_{i,j}}} &= \frac{1}{B} \cdot \frac{\partial{L_i}}{\partial{{}^LO_{i,j}}}\\
+\frac{\partial{L_G}}{\partial{{}^LO_{i,j}}} &= \frac{1}{B} \cdot \frac{\partial{L_i}}{\partial{{}^LO_{i,j}}}\\[0.4em]
 &= \begin{cases}
-\frac{1}{B} \cdot \sigma({}^LO_{i,j})-1 & \text{for } j = t\\
+\frac{1}{B} \cdot \sigma({}^LO_{i,j})-1 & \text{for } j = t\\[0.4em]
 \frac{1}{B} \cdot \sigma({}^LO_{i,j}) & \text{for } j \ne t\\
 \end{cases}
 \end{aligned}
@@ -536,10 +542,10 @@ $$
 \frac{\partial L_G}{\partial {}^L\vec{b}_j} &=
 \frac{\partial {}^LX_{i,j}}{\partial {}^L\vec{b}_j}
 \cdot
-\frac{\partial L_G} {\partial {}^LX_{i,j}}\\
+\frac{\partial L_G} {\partial {}^LX_{i,j}}\\[0.4em]
 &= \frac{\partial {}^LX_{i,j}}{\partial {}^L\vec{b}_j}
 \cdot
-(G_X)_{i,j}\\
+(G_X)_{i,j}\\[0.4em]
 &=(G_X)_{i,j}
 \end{aligned}
 \qquad
@@ -562,8 +568,8 @@ Next, we calculate the gradient matrix $G_W$ of the weights ${}^LW$. To do so, w
 
 $$
 X_{s,i}
-=\sum_{j=0}^{\text{dim}({}^{L-1}O_s)-1} {{}^{L-1}O_{s,j}\cdot {}^LW_{j,i}}
-\quad + \vec{b}_i
+=\!\!\!\! \sum_{j=0}^{\text{dim}({}^{L-1}O_s)-1} {{}^{L-1}O_{s,j}\cdot {}^LW_{j,i}}
+\quad + \, \vec{b}_i
 \qquad
 i,j,s \in \mathbb{N}
 $$
@@ -580,7 +586,7 @@ Applying the chain rule yields:
 $$
 \begin{aligned}
 \frac{\partial L_G} {\partial{}^LW_{j,i}} &=
-\frac{\partial X_{s,i}} {\partial{}^LW_{j,i}} \cdot \frac{\partial L_G} {\partial {}^LX_{s,i}}\\
+\frac{\partial X_{s,i}} {\partial{}^LW_{j,i}} \cdot \frac{\partial L_G} {\partial {}^LX_{s,i}}\\[0.4em]
 &= {}^{L-1}O_{s,j}
 \cdot
 (G_X)_{s,i}
@@ -626,7 +632,7 @@ Again, applying the chain rule provides:
 $$
 \begin{aligned}
 \frac{\partial L_G} {\partial{}^{L-1}O_{s,j}} &=
-\frac{\partial X_{s,i}} {\partial{}^{L-1}O_{s,j}} \cdot \frac{\partial L_G} {\partial {}^LX_{s,i}}\\
+\frac{\partial X_{s,i}} {\partial{}^{L-1}O_{s,j}} \cdot \frac{\partial L_G} {\partial {}^LX_{s,i}}\\[0.5em]
 &= {}^LW_{j,i}
 \cdot
 (G_X)_{s,i}
@@ -663,6 +669,7 @@ As there are existing a lot of different activation functions we will not be abl
   link=""
 >}}
 
+<!-- ![[assets/images/Activation_ReLU.png]] -->
 
 Having the graph above in mind the derivative of the ReLU function can evidently only be $0$ or $1$, depending on whether the input $x$ is positive or negative. For the function's input $I$ and its corresponding output $A$ we can write the following partial derivative.
 
@@ -683,12 +690,12 @@ Then, we apply the respective gradients $G_A$ which we get from the successor la
 $$
 \begin{aligned}
 (G_I)_{i,j} &=
-\frac{\partial A_{i,j}}{\partial I_{i,j}} \cdot \frac{\partial L_G}{\partial A_{i,j}}\\
+\frac{\partial A_{i,j}}{\partial I_{i,j}} \cdot \frac{\partial L_G}{\partial A_{i,j}}\\[0.4em]
 &=(G_A)_{i,j}\cdot
 \begin{cases}
 0 & \text{for } I_{i,j} < 0\\
 1 & \text{for } I_{i,j} \ge 0
-\end{cases}\\
+\end{cases}\\[0.4em]
 &=\begin{cases}
 0 & \text{for } I_{i,j} < 0\\
 (G_A)_{i,j} & \text{for } I_{i,j} \ge 0

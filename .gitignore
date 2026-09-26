@@ -1,5 +1,6 @@
 public/
 *.lock
+*.obsidian
 
 NeuralNetwork/datasets/*
 NeuralNetwork/build/*

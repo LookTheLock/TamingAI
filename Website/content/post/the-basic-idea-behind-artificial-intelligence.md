@@ -16,13 +16,13 @@ What even is an Artificial Intelligence? ...
 ## **Regression**
 Imagine a handful of dots scattered across a plane.
 
-<!-- ![[../../Attachements/Informatique/LinearDatapoints.png|418]] -->
-
 {{< figure
   src="/images/LinearDatapoints.png"
   alt="Linear Datapoints"
   link=""
 >}}
+
+<!-- ![[assets/images/LinearDatapoints.png]] -->
 
 These data points may be a measurement of a physics experiment, e. g. the price of a house which only depends on its living space, or whatever you want it to be. The point is that you got a variable $y$ which is only dependent on one single variable $x$. Most importantly, they happen to form a sort of *linear relation*; you can clearly see that all your data pools (with some variance) around a linear function with an increase of $1$ and no offset.
 
@@ -30,13 +30,13 @@ Now you are given the task to evaluate your data and make a prediction on a spec
 This is what we refer to as a *regression*. In our case it is a linear one.
 
 
-<!-- ![[../../Attachements/Informatique/LinearRegression.png|431]] -->
-
 {{< figure
   src="/images/LinearRegression.png"
   alt="Linear Regression"
   link=""
 >}}
+
+<!--![[assets/images/LinearRegression.png]]  -->
 
 This small example already demonstrates the very basic idea of an *Artificial Intelligence (AI)*. You have some data points which we can already call our *training data*, and we aim to approximate them using a function to make a prediction.
 
