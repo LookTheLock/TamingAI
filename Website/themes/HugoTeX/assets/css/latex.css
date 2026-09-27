@@ -267,7 +267,7 @@ a:focus {
 }
 
 /* Make images easier to work with */
-img {
+img, picture {
   max-width: 90%;
   height: auto;
   display: block;

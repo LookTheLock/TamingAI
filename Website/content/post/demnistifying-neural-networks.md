@@ -23,6 +23,8 @@ Example of the number nine:
   link=""
 >}}
 
+
+
 <!--![[assets/images/MNIST_9.png]]  -->
 
 The dataset preserves $60,000$ labeled images to train on and additional $10,000$ labeled images to test the model's accuracy on unseen data.
@@ -55,6 +57,8 @@ The mathematics behind this training concept will furthermore be discussed.
 This is one of the most common representations of a *Neural Network*:
 
 <!-- ![[../../Pasted image 20260915101906.png|386]] -->
+
+{{< themesvg light="tikz.svg" dark="itikz.svg" alt="tikz" >}}
 
 In this figure every dot represents a *neuron*; the connections between the neurons are referred to as *weights*. Moreover, you may have already noticed the *neurons* being grouped in *layers*. The output of the *Neural Network* is normally calculated step by step by calculating layer after layer from left to right. Every *neuron* of one *layer* is connected to every *neuron* of the previous *layer*, and therefore receives data from all of the previous *neurons*. This is why this structure is sometimes called a *fully interconnected layer*.
 To sum all this up mathematically, a *neuron* ${}^Ln_{i}$ of the *layer* $L$ is a weighted sum of all *neurons* ${}^{L-1}n_{i}$ of the previous *layer* $L-1$. Most importantly, each *neuron* ${}^Ln_{i}$ has its own *weight* $w_{i,j}$ for every *neuron* ${}^{L-1}n_{j}$, so that it interprets them differently than all the other *neurons* of the same *layer*.
