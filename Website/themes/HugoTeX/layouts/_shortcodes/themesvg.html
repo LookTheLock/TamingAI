@@ -1,6 +1,6 @@
-{{ $light := resources.Get "images/tikz.svg" }}
-{{ $dark := resources.Get "images/itikz.svg" }}
+{{ $light := resources.Get (printf "images/%s" (.Get "light")) }}
+{{ $dark := resources.Get (printf "images/%s" (.Get "dark")) }}
 <picture>
   <source srcset="{{ $dark.RelPermalink }}" media="(prefers-color-scheme: dark)">
-  <img src="{{ $light.RelPermalink }}" alt="tikz">
+  <img src="{{ $light.RelPermalink }}" alt="{{ .Get "alt" }}">
 </picture>
