@@ -61,8 +61,13 @@ This is one of the most common representations of a *Neural Network*:
 {{< themesvg light="neural-net-named.svg" dark="ineural-net-named.svg" alt="neural-net-named" >}}
 
 In this figure every dot represents a *neuron*; the connections between the neurons are referred to as *weights*. Moreover, you may have already noticed the *neurons* being grouped in *layers*. The output of the *Neural Network* is normally calculated step by step by calculating layer after layer from left to right. Every *neuron* of one *layer* is connected to every *neuron* of the previous *layer*, and therefore receives data from all of the previous *neurons*. This is why this structure is sometimes called a *fully interconnected layer*.
-To sum all this up mathematically, a *neuron* ${}^Ln_{i}$ of the *layer* $L$ is a weighted sum of all *neurons* ${}^{L-1}n_{i}$ of the previous *layer* $L-1$. Most importantly, each *neuron* ${}^Ln_{i}$ has its own *weight* $w_{i,j}$ for every *neuron* ${}^{L-1}n_{j}$, so that it interprets them differently than all the other *neurons* of the same *layer*.
-The *input layer* $L=0$ is somehow special because it does not calculate anything. Its *neurons* are just set to the input, so that each *neuron* of the layer corresponds to one *feature* of the input *sample*, for example, a pixel of an image. Now, we notate every layer as a vector that contains its neurons:
+
+$$
+\text{Diag. 2}
+$$
+
+To sum all this up mathematically, a *neuron* ${}^Ln_{j}$ of the *layer* $L$ is a weighted sum of all *neurons* ${}^{L-1}n_{i}$ of the previous *layer* $L-1$. Most importantly, each *neuron* ${}^Ln_{j}$ has its own *weight* $w_{i,j}$ for every *neuron* ${}^{L-1}n_{i}$, so that it interprets them differently than all the other *neurons* of the same *layer*.
+The *input layer* $L=0$ is somewhat special because it does not calculate anything. Its *neurons* are just set to the input, so that each *neuron* of the layer corresponds to one *feature* of the input *sample*, for example, a pixel of an image. Now, we notate every layer as a vector that contains its neurons:
 
 $$
 ^{L}\vec{n} =
@@ -75,7 +80,7 @@ m \in \mathbb{N},
 \text{m is the number of neurons in the layer L}
 $$
 
-The input vector of one of the digits of the earlier mentioned MNIST dataset, in which each of the $28*28$ pixels $p$ is represented by one tone of gray, would therefore look like this:
+The input vector of one of the digits of the earlier mentioned MNIST dataset, in which each of the $28 \cdot 28$ pixels $p$ is represented by one tone of gray, would therefore look like this:
 
 $$
 \begin{aligned}
@@ -94,16 +99,16 @@ Now, we got an input with which we can begin to calculate our first *layer* $L=1
 For every *neuron* ${}^1n_i$ the following formula applies:
 
 $$
-{}^1n_i = \sum_{j=0}^{783} {}^0\vec{n}_j\vec{w}_j
+{}^1n_i = \sum_{j=0}^{783} {}^0\vec{n}_j \cdot {}^1\vec{w}_{j}
 $$
 
-Here $\vec{w}$ holds all the connections (the *weights*) between the *neuron* ${}^1n_m$ and all the *neurons* of the first *layer* ${}^0\vec{n}$. Of course, $\vec{w}_0$ corresponds to ${}^1\vec{n}_0$, $\vec{w}_1$ corresponds to ${}^1\vec{n}_1$ and so on.
+Here ${}^1\vec{w}$ holds all the connections (the *weights*) between the *neuron* ${}^1n_m$ and all the *neurons* of the first *layer* ${}^0\vec{n}$. Of course, ${}^1\vec{w}_0$ corresponds to ${}^1\vec{n}_0$, ${}^1\vec{w}_1$ corresponds to ${}^1\vec{n}_1$ and so on.
 The interesting part about this is that you can just rewrite that expression for every *neuron* as a dot product of the *neurons* of the previous *layer* and the respective *neuron's* *weights*:
 
 $$
-{}^1n_i = {}^0\vec{n} \cdot \vec{w}
+{}^1n_i = {}^0\vec{n} \cdot {}^1\vec{w}
 \qquad
-\dim({}^0\vec{n}) = \dim(\vec{w})
+\dim({}^0\vec{n}) = \dim({}^1\vec{w})
 $$
 
 We can take this even further by combining every *weight vector* of every neuron in a layer in form of a *weight matrix* ${}^LW$ like this:
